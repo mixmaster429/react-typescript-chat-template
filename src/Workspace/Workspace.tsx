@@ -6,7 +6,14 @@ import DataView from './DataView';
 import { v4 as uuid } from 'uuid';
 import { sentences } from '../assets/sentences';
 import { DateTime } from 'luxon';
-import { IChat, IChatMessage } from '../interfaces';
+import {
+  IChat,
+  IChatMessage,
+  ChatTopicType,
+  ChatStatusType,
+  ChatChannelType,
+  CommsType,
+} from '../interfaces';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -35,8 +42,10 @@ const useStyles = makeStyles((theme: Theme) => ({
 const Workspace = () => {
   const classes = useStyles();
 
-  const [chatData, setChatData] = useState({} as IChat);
+  const [chatData, setChatData] = useState([] as IChat[]);
   const [currentAuthor, setCurrentAuthor] = useState(null);
+  const [selectedChatid, setSelectedChatid] = useState(null);
+  const [selectedChatdata, setSelectedChatdata] = useState({} as IChat);
 
   const mockMessage = (userId, message): IChatMessage => {
     let content;
@@ -45,7 +54,6 @@ const Workspace = () => {
     } else {
       content = sentences[Math.floor(Math.random() * sentences.length)];
     }
-
     return {
       chatMessageId: uuid(),
       authorId: userId,
@@ -56,17 +64,40 @@ const Workspace = () => {
   };
 
   const handleAddNewMessage = (message) => {
-    const chat = { ...chatData };
-    if (!chat.messages) {
-      chat.messages = [] as IChatMessage[];
-    }
-    chat.messages = [...chat.messages, mockMessage(currentAuthor, message)];
+    const index = chatData.findIndex((x) => x.chatId === selectedChatid);
+    const new_message = mockMessage(currentAuthor, message);
+    let lastchat = chatData;
+    lastchat[index]['messages'] = [...lastchat[index]['messages'], new_message];
+    lastchat['lastMessage'] = new_message;
+    setChatData([...lastchat]);
+    setSelectedChatdata({...lastchat[index]});
+  };
 
-    setChatData(chat);
+  const handleChatClicked = (chatID) => {
+    setSelectedChatid(chatID);
+    const index = chatData.findIndex((x) => x.chatId === chatID);
+    setSelectedChatdata(chatData[index]);
+  };
+
+  const newchat = (userId, topic, message) => {
+    const chatID = uuid();
+    const newmessage = mockMessage(userId, message);
+    const newchatdata = {
+      chatId: chatID as string,
+      channel: 'SMS' as ChatChannelType,
+      currentResponders: [],
+      status: 'Open' as ChatStatusType,
+      messages: [newmessage],
+      topic: topic as ChatTopicType,
+      commsType: 'Chat' as CommsType,
+      createdAt: DateTime.local(),
+      lastMessage: newmessage,
+    };
+    setChatData([...chatData, newchatdata]);
   };
 
   const handleClearAll = (_) => {
-    setChatData({} as IChat);
+    setChatData([] as IChat[]);
   };
 
   const handleUserIdChange = ($event) => {
@@ -80,7 +111,13 @@ const Workspace = () => {
   return (
     <div className={classes.root}>
       <div className={classes.chat}>
-        <Chat data={chatData} sendmessage={handleAddNewMessage} />
+        <Chat
+          chatData={chatData}
+          selectedChatdata={selectedChatdata}
+          sendmessage={handleAddNewMessage}
+          newchat={newchat}
+          handleChatClicked={handleChatClicked}
+        />
       </div>
       <div className={classes.controls}>
         <Controls

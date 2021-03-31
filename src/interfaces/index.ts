@@ -1,32 +1,17 @@
 import { DateTime } from 'luxon';
 
-export type ChatTopicType =
-  | 'Customer'
-  | 'Chat Topic A'
-  | 'Chat Topic B'
-  | 'Chat Topic C';
+export type ChatTopicType = 'Customer' | 'Chat Topic A' | 'Chat Topic B' | 'Chat Topic C';
 
-export type ChatStatusType =
-  | 'New'
-  | 'Open'
-  | 'Closed';
+export type ChatStatusType = 'New' | 'Open' | 'Closed';
 
-export type ChatChannelType =
-  | 'Internal'
-  | 'SMS'
-  | 'Email'
-  | 'Facebook'
-  | 'Twitter';
+export type ChatChannelType = 'Internal' | 'SMS' | 'Email' | 'Facebook' | 'Twitter';
 
-export type CommsType =
-  | 'Phone Call'
-  | 'Chat';
+export type CommsType = 'Phone Call' | 'Chat';
 
 /**
  * A communication.
  */
 export interface IComms {
-
   /// The communication type, Phone Call or Chat
   commsType: CommsType;
 
@@ -40,14 +25,12 @@ export interface IComms {
 /**
  * A phone call.
  */
-export interface IPhoneCall extends IComms {
-}
+export interface IPhoneCall extends IComms {}
 
 /**
  * A chat.
  */
 export interface IChat extends IComms {
-
   /// Unique ID of this chat.
   chatId: string;
 
@@ -64,7 +47,7 @@ export interface IChat extends IComms {
   currentResponders: string[];
 
   /// [Optional] The last message sent.
-  lastMessage?: IChatMessage;
+  lastMessage: IChatMessage;
 
   /// The status of this chat.
   status: ChatStatusType;
@@ -75,6 +58,9 @@ export interface IChat extends IComms {
   /// A list of messages for this chat.
   messages: IChatMessage[];
 
+  createdAt: DateTime;
+
+  commsType: CommsType;
 }
 
 /**

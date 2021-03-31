@@ -30,7 +30,7 @@ const ChatList = (props) => {
 
   return (
     <div className={classes.root}>
-      <Header></Header>
+      <Header newchat={props.newchat}></Header>
       <List component="nav">
         {props.chats &&
           props.chats.map((chat: IChat, key) => (
@@ -43,7 +43,7 @@ const ChatList = (props) => {
               <Avatar>
                 <FontAwesomeIcon icon={faSms} />
               </Avatar>
-              <div className={classes.cardTitle}>{chat.phoneNumber}</div>
+              <div className={classes.cardTitle}>{chat.lastMessage.content}</div>
             </ListItem>
           ))}
       </List>

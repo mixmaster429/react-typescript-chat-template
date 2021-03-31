@@ -19,38 +19,12 @@ const useStyles = makeStyles((theme: Theme) => ({
 const Chat = (props) => {
   const classes = useStyles();
 
-  const dummyChats: IChat[] = [
-    {
-      chatId: uuid(),
-      channel: 'SMS',
-      phoneNumber: '15551234567',
-      currentResponders: [],
-      status: 'Open',
-      messages: [],
-      commsType: 'Chat',
-      createdAt: DateTime.local(),
-    },
-    {
-      chatId: uuid(),
-      channel: 'SMS',
-      phoneNumber: '15559876543',
-      currentResponders: [],
-      status: 'Open',
-      messages: [],
-      commsType: 'Chat',
-      createdAt: DateTime.local(),
-    },
-  ];
-
-  const handleChatClicked = (chatId: string) => {
-    // TODO
-    console.log('TODO');
-  };
+  const { selectedChatdata, chatData } = props;
 
   return (
     <div className={classes.root}>
-      <ChatList chats={dummyChats} onChatClicked={handleChatClicked} />
-      <ChatConversation data={props.data} sendmessage={props.sendmessage}/>
+      <ChatList chats={chatData} newchat={props.newchat} onChatClicked={props.handleChatClicked} />
+      <ChatConversation data={selectedChatdata} sendmessage={props.sendmessage} />
     </div>
   );
 };
