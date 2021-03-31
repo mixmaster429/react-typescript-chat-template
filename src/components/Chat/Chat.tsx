@@ -6,17 +6,17 @@ import { v4 as uuid } from 'uuid';
 import { IChat } from '../../interfaces';
 import { DateTime } from 'luxon';
 
-const useStyles = makeStyles((theme: Theme) => ( {
+const useStyles = makeStyles((theme: Theme) => ({
   root: {
     display: 'flex',
     flexDirection: 'row',
     height: '100%',
     flexGrow: 1,
     outline: '1px solid ' + theme.palette.divider,
-  }
-} ));
+  },
+}));
 
-const Chat = () => {
+const Chat = (props) => {
   const classes = useStyles();
 
   const dummyChats: IChat[] = [
@@ -48,9 +48,9 @@ const Chat = () => {
   };
 
   return (
-    <div className={ classes.root }>
-      <ChatList chats={ dummyChats } onChatClicked={ handleChatClicked }/>
-      <ChatConversation/>
+    <div className={classes.root}>
+      <ChatList chats={dummyChats} onChatClicked={handleChatClicked} />
+      <ChatConversation data={props.data} sendmessage={props.sendmessage}/>
     </div>
   );
 };

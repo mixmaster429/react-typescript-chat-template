@@ -31,7 +31,7 @@ const Controls = (props) => {
               variant="contained"
               name="addText"
               id="addText"
-              onClick={ props.onAddMessage }>
+              onClick={(e) => props.onAddMessage('') }>
         Send Random Message
       </Button>
 
