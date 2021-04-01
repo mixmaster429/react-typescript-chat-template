@@ -43,6 +43,7 @@ const ChatInput = (props) => {
           name="chatInput"
           type="text"
           value={message}
+          placeholder="Start typing..."
           onChange={(e) => handleKeyUp(e)}
         />
 

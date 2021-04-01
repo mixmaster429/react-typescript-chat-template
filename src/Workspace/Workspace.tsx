@@ -149,6 +149,7 @@ const Workspace = () => {
           onAddMessage={handleAddNewMessage}
           onClearAll={handleClearAll}
           onUserIdChange={handleUserIdChange}
+          selectedChatdata={selectedChatdata}
         />
         <Divider />
         <DataView data={chatData} />

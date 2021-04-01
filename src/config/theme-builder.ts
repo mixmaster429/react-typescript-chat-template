@@ -1,11 +1,10 @@
-import { createMuiTheme, useMediaQuery } from '@material-ui/core';
+import { unstable_createMuiStrictModeTheme as createMuiTheme } from '@material-ui/core';
 import React from 'react';
 import { Shadows } from '@material-ui/core/styles/shadows';
 
 const ogdBlue = '#0086D6';
 
 export default function ThemeBuilder() {
-  const prefersDarkMode = useMediaQuery('(prefers-color-scheme)');
 
   return React.useMemo(
     () =>
@@ -49,6 +48,6 @@ export default function ThemeBuilder() {
         },
 
       }),
-    [ prefersDarkMode ]
+    [  ]
   );
 }

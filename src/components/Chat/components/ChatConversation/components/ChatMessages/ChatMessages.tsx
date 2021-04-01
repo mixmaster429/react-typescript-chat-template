@@ -88,7 +88,7 @@ const ChatMessages = (props) => {
           <div className={classes.responders}>
             {responders.map((user, key) => {
               return (
-                <>
+                <React.Fragment key={key}>
                   <Avatar
                     className={classes.responder}
                     style={{
@@ -97,7 +97,7 @@ const ChatMessages = (props) => {
                   >
                     {getinitials(user)}
                   </Avatar>
-                </>
+                </React.Fragment>
               );
             })}
           </div>
