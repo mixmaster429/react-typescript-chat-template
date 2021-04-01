@@ -65,7 +65,6 @@ const ChatList = (props) => {
 
   const checkfilter = (chat) => {
     if (filter.category) {
-      console.log(filter.category);
       switch (filter.category) {
         case 'topic':
           if (chat.topic === filter.criteria) return true;
