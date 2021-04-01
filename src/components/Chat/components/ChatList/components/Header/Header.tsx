@@ -7,7 +7,7 @@ import FilterchatModal from './FilterchatModal/FilterchatModal';
 
 const useStyles = makeStyles((theme: Theme) => ({
   header: {
-    padding: '10px',
+    padding: 10,
     borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
     display: 'flex',
     alignItems: 'center',

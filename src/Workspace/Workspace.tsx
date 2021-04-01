@@ -46,6 +46,7 @@ const Workspace = () => {
   const [currentAuthor, setCurrentAuthor] = useState(null);
   const [selectedChatid, setSelectedChatid] = useState(null);
   const [selectedChatdata, setSelectedChatdata] = useState({} as IChat);
+  const [lastresponse, setLastresponse] = useState(null);
 
   const mockMessage = (userId, message): IChatMessage => {
     let content;
@@ -54,9 +55,10 @@ const Workspace = () => {
     } else {
       content = sentences[Math.floor(Math.random() * sentences.length)];
     }
+    setLastresponse(DateTime.local());
     return {
       chatMessageId: uuid(),
-      authorId: userId,
+      authorId: userId ? userId : 'ME',
       content: content,
       read: false,
       createdAt: DateTime.local(),
@@ -68,9 +70,9 @@ const Workspace = () => {
     const new_message = mockMessage(currentAuthor, message);
     let lastchat = chatData;
     lastchat[index]['messages'] = [...lastchat[index]['messages'], new_message];
-    lastchat['lastMessage'] = new_message;
+    lastchat[index]['lastMessage'] = new_message;
     setChatData([...lastchat]);
-    setSelectedChatdata({...lastchat[index]});
+    setSelectedChatdata({ ...lastchat[index] });
   };
 
   const handleChatClicked = (chatID) => {
@@ -84,16 +86,18 @@ const Workspace = () => {
     const newmessage = mockMessage(userId, message);
     const newchatdata = {
       chatId: chatID as string,
+      senderId: userId as string,
       channel: 'SMS' as ChatChannelType,
       currentResponders: [],
       status: 'Open' as ChatStatusType,
-      messages: [newmessage],
+      messages: [],
       topic: topic as ChatTopicType,
       commsType: 'Chat' as CommsType,
       createdAt: DateTime.local(),
-      lastMessage: newmessage,
     };
     setChatData([...chatData, newchatdata]);
+    setSelectedChatid(chatID);
+    setSelectedChatdata(newchatdata);
   };
 
   const handleClearAll = (_) => {
@@ -114,6 +118,7 @@ const Workspace = () => {
         <Chat
           chatData={chatData}
           selectedChatdata={selectedChatdata}
+          lastresponse={lastresponse}
           sendmessage={handleAddNewMessage}
           newchat={newchat}
           handleChatClicked={handleChatClicked}

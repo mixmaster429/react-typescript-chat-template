@@ -37,6 +37,8 @@ export interface IChat extends IComms {
   /// [Optional] Job ID attached to this chat.
   jobId?: string;
 
+  senderId: string;
+
   /// [Optional] ID of tech.
   techId?: string;
 
@@ -47,7 +49,7 @@ export interface IChat extends IComms {
   currentResponders: string[];
 
   /// [Optional] The last message sent.
-  lastMessage: IChatMessage;
+  lastMessage?: IChatMessage;
 
   /// The status of this chat.
   status: ChatStatusType;
@@ -71,7 +73,7 @@ export interface IChatMessage {
   chatMessageId: string;
 
   /// [Optional] This message's author, null if customer.
-  authorId?: string;
+  authorId: string;
 
   /// The text content of this message.
   content: string;

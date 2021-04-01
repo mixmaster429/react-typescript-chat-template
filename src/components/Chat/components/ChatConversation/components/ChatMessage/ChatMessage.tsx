@@ -34,14 +34,24 @@ const ChatMessage = (props) => {
 
   const message = props.message;
 
+  const getinitials = (name) => {
+    if (name)
+      return name
+        .match(/(^\S\S?|\b\S)?/g)
+        .join('')
+        .match(/(^\S|\S$)?/g)
+        .join('')
+        .toUpperCase();
+  };
+
   return (
     <>
       <div
         className={
-          message.authorId === null ? classes.message + ' ' + classes.send : classes.message
+          message.authorId === "ME" ? classes.message + ' ' + classes.send : classes.message
         }
       >
-        <Avatar className={classes.avatar}>H</Avatar>
+        <Avatar className={classes.avatar}>{getinitials(message.authorId)}</Avatar>
         <div className={classes.messageitem}>
           <p className={classes.messagetime}>
             {DateTime.fromISO(message.createdAt).toLocaleString(DateTime.DATETIME_SHORT)}

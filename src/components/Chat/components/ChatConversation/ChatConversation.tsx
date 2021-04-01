@@ -15,10 +15,12 @@ const useStyles = makeStyles((theme: Theme) => ({
 const ChatConversation = (props) => {
   const classes = useStyles();
 
+  const { selectedChatdata } = props;
+
   return (
     <div className={classes.root}>
-      <ChatMessages data={props.data} />
-      <ChatInput sendmessage={props.sendmessage} />
+      <ChatMessages {...props} />
+      {Object.keys(selectedChatdata).length > 0 && <ChatInput {...props} />}
     </div>
   );
 };
