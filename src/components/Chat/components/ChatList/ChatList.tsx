@@ -31,7 +31,6 @@ const ChatList = (props) => {
   const [selectedChatId, setSelectedChatId] = useState(props.selectedChatdata.chatId);
   const [hasincoming, setHasincoming] = useState(false);
   const { filter } = props;
-  console.log(filter);
 
   const handleChatClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>, chatId: string) => {
     setSelectedChatId(chatId);
