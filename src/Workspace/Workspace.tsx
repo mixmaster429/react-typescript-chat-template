@@ -95,7 +95,7 @@ const Workspace = () => {
       commsType: 'Chat' as CommsType,
       createdAt: DateTime.local(),
     };
-    setChatData([...chatData, newchatdata]);
+    setChatData([newchatdata, ...chatData ]);
     setSelectedChatid(chatID);
     setSelectedChatdata(newchatdata);
   };
