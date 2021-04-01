@@ -17,6 +17,10 @@ const useStyles = makeStyles((theme: Theme) => ({
     padding: 10,
     display: 'flex',
     alignItems: 'center',
+    position: 'sticky',
+    top: 0,
+    zIndex: 1,
+    backgroundColor: 'white',
   },
   avatar: {
     margin: '0 5px',
@@ -47,7 +51,7 @@ const ChatMessages = (props) => {
       {props.selectedChatdata.messages && (
         <>
           {props.selectedChatdata.messages.map((message, key) => {
-            return <ChatMessage key={key} message={message}></ChatMessage>;
+            return <ChatMessage key={key} message={message} responders={props.selectedChatdata.currentResponders}></ChatMessage>;
           })}
         </>
       )}

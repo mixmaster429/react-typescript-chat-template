@@ -51,9 +51,9 @@ const useStyles = makeStyles((theme: Theme) => ({
     position: 'relative',
     borderTopLeftRadius: 0,
 
-    '&.send' : {
+    '&.send': {
       backgroundColor: '#bde1f9',
-    }
+    },
   },
 }));
 
@@ -72,6 +72,23 @@ const ChatMessage = (props) => {
         .toUpperCase();
   };
 
+  const colorarray = [
+    '#982d73',
+    '#bab1ed',
+    '#e51c',
+    '#142a55',
+    '#11df79',
+    '#9d096a',
+    '#869257',
+    '#2a648e',
+    '#78932f',
+    '#a7ed99',
+  ];
+
+  const getindex = (array, id) => {
+    return array.indexOf(id);
+  };
+
   return (
     <>
       <div
@@ -79,7 +96,14 @@ const ChatMessage = (props) => {
           message.authorId === 'ME' ? classes.message + ' ' + classes.send : classes.message
         }
       >
-        <Avatar className={classes.avatar}>{getinitials(message.authorId)}</Avatar>
+        <Avatar
+          className={classes.avatar}
+          style={{
+            backgroundColor: colorarray[getindex(props.responders, message.authorId)],
+          }}
+        >
+          {getinitials(message.authorId)}
+        </Avatar>
         <div className={classes.messageitem}>
           <p className={classes.messagetime}>
             {DateTime.fromISO(message.createdAt).toLocaleString(DateTime.DATETIME_SHORT)}

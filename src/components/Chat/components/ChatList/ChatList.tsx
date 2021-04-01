@@ -14,6 +14,30 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   cardTitle: {
     padding: theme.spacing(1),
+    width: '100%',
+  },
+  sendername: {
+    margin: 0,
+    fontSize: 20,
+  },
+  listheader: {
+    margin: 0,
+    display: 'flex',
+    justifyContent: 'space-between',
+  },
+  responders: {
+    display: 'flex',
+  },
+  responder: {
+    width: 30,
+    height: 30,
+    fontSize: 12,
+    marginRight: -10,
+    zIndex: 0,
+
+    '&:hover': {
+      zIndex: 1,
+    },
   },
   margin: {
     margin: 0,
@@ -32,6 +56,19 @@ const ChatList = (props) => {
   const [hasincoming, setHasincoming] = useState(false);
   const { filter } = props;
 
+  const colorarray = [
+    '#982d73',
+    '#bab1ed',
+    '#e51c',
+    '#142a55',
+    '#11df79',
+    '#9d096a',
+    '#869257',
+    '#2a648e',
+    '#78932f',
+    '#a7ed99',
+  ];
+
   const handleChatClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>, chatId: string) => {
     setSelectedChatId(chatId);
     props.handleChatClicked(chatId);
@@ -45,6 +82,10 @@ const ChatList = (props) => {
         .match(/(^\S|\S$)?/g)
         .join('')
         .toUpperCase();
+  };
+
+  const getindex = (array, id) => {
+    return array.indexOf(id);
   };
 
   useEffect(() => {
@@ -96,13 +137,30 @@ const ChatList = (props) => {
                 >
                   <Avatar>{getinitials(chat.senderId)}</Avatar>
                   <div className={classes.cardTitle}>
-                    <p className={classes.margin}>
-                      <Chip size="small" label={chat.channel} color="primary" />
-                      <Chip variant="outlined" color="primary" size="small" label={chat.status} />
-                    </p>
-                    <p className={classes.margin}>
-                      {chat.lastMessage ? chat.lastMessage.content : ' '}
-                    </p>
+                    <div className={classes.listheader}>
+                      <div>
+                        <Chip size="small" label={chat.channel} color="primary" />
+                        <Chip variant="outlined" color="primary" size="small" label={chat.status} />
+                      </div>
+                      <div className={classes.responders}>
+                        {chat.currentResponders.map((user, key) => {
+                          return (
+                            <>
+                              <Avatar
+                                className={classes.responder}
+                                style={{
+                                  backgroundColor:
+                                    colorarray[getindex(chat.currentResponders, user)],
+                                }}
+                              >
+                                {getinitials(user)}
+                              </Avatar>
+                            </>
+                          );
+                        })}
+                      </div>
+                    </div>
+                    <p className={classes.margin}>{chat.senderId}</p>
                   </div>
                 </ListItem>
               ) : (
@@ -134,6 +192,7 @@ const ChatList = (props) => {
                       <Chip size="small" label={chat.channel} color="primary" />
                       <Chip variant="outlined" color="primary" size="small" label={chat.status} />
                     </div>
+                    <p className={classes.sendername}>{chat.senderId}</p>
                   </div>
                 </ListItem>
               ) : (

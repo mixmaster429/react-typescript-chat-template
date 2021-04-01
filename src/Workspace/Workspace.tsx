@@ -75,6 +75,12 @@ const Workspace = () => {
     let lastchat = chatData;
     lastchat[index]['messages'] = [...lastchat[index]['messages'], new_message];
     lastchat[index]['lastMessage'] = new_message;
+    let responders = lastchat[index]['currentResponders'];
+    let responder = currentAuthor ? currentAuthor : "ME";
+    if (responders.indexOf('' + responder) < 0) {
+      responders.push('' + responder);
+    }
+    lastchat[index]['currentResponders'] = responders;
     setChatData([...lastchat]);
     setSelectedChatdata({ ...lastchat[index] });
   };
