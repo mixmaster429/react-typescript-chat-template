@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Avatar, List, ListItem, makeStyles, Theme, Chip } from '@material-ui/core';
 import { IChat } from '../../../../interfaces';
-import { faSms } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 
@@ -32,6 +30,8 @@ const ChatList = (props) => {
 
   const [selectedChatId, setSelectedChatId] = useState(props.selectedChatdata.chatId);
   const [hasincoming, setHasincoming] = useState(false);
+  const { filter } = props;
+  console.log(filter);
 
   const handleChatClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>, chatId: string) => {
     setSelectedChatId(chatId);
@@ -58,10 +58,30 @@ const ChatList = (props) => {
       props.chatData.map((item, key) => {
         if (!item.lastMessage) {
           setHasincoming(true);
-          console.log('s');
         }
+        return true;
       });
   }, [props.chatData]);
+
+  const checkfilter = (chat) => {
+    if (filter.category) {
+      console.log(filter.category);
+      switch (filter.category) {
+        case 'topic':
+          if (chat.topic === filter.criteria) return true;
+          else return false;
+
+        case 'senderid':
+          if (chat.senderId === filter.criteria) return true;
+          else return false;
+
+        case 'channel':
+          if (chat.channel === filter.criteria) return true;
+          else return false;
+      }
+    }
+    return true;
+  };
 
   return (
     <div className={classes.root}>
@@ -70,7 +90,7 @@ const ChatList = (props) => {
         {props.chatData &&
           props.chatData.map((chat: IChat, key) => (
             <>
-              {chat.lastMessage && (
+              {chat.lastMessage && checkfilter(chat) ? (
                 <ListItem
                   key={key}
                   button
@@ -88,6 +108,8 @@ const ChatList = (props) => {
                     </p>
                   </div>
                 </ListItem>
+              ) : (
+                <></>
               )}
             </>
           ))}
@@ -103,7 +125,7 @@ const ChatList = (props) => {
         {props.chatData &&
           props.chatData.map((chat: IChat, key) => (
             <>
-              {!chat.lastMessage && (
+              {!chat.lastMessage && checkfilter(chat) ? (
                 <ListItem
                   key={key}
                   button
@@ -118,6 +140,8 @@ const ChatList = (props) => {
                     </p>
                   </div>
                 </ListItem>
+              ) : (
+                <></>
               )}
             </>
           ))}

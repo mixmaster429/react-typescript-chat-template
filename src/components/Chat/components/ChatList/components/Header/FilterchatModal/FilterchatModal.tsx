@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import {
   makeStyles,
   Theme,
@@ -32,26 +33,49 @@ const useStyles = makeStyles((theme: Theme) => ({
 const FilterchatModal = (props) => {
   const classes = useStyles();
 
+  const [category, setCategory] = useState(props.filter.category ? props.filter.category : 'topic');
+  const [criteria, setCriteria] = useState(props.filter.criteria ? props.filter.criteria : '');
+
+  const setfilter = (e) => {
+    props.setfilter(category, criteria);
+  };
+
+  const resetfilter = (e) => {
+    setCategory('topic');
+    setCriteria('');
+    props.setfilter('', '');
+  };
+
   return (
     <div className={classes.dropdown}>
       <FormControl fullWidth className={classes.margin}>
         <InputLabel>Category</InputLabel>
-        <Select>
-          <MenuItem value={10}>Ten</MenuItem>
-          <MenuItem value={20}>Twenty</MenuItem>
-          <MenuItem value={30}>Thirty</MenuItem>
+        <Select value={category} onChange={(e) => setCategory(e.target.value as string)}>
+          <MenuItem value="topic">Topic</MenuItem>
+          <MenuItem value="senderid">SenderID</MenuItem>
+          <MenuItem value="channel">Channel</MenuItem>
         </Select>
       </FormControl>
 
       <FormControl fullWidth variant="outlined" className={classes.margin}>
-        <TextField label="Filter criteria" size="small" />
+        <TextField
+          label="Filter criteria"
+          size="small"
+          value={criteria}
+          onChange={(e) => setCriteria(e.target.value)}
+        />
       </FormControl>
 
-      <Button variant="contained" color="primary" className={classes.buttonmargin}>
-        Send
+      <Button variant="contained" color="primary" className={classes.buttonmargin} onClick={resetfilter}>
+        Reset
       </Button>
 
-      <Button variant="contained" color="primary" className={classes.buttonmargin}>
+      <Button
+        variant="contained"
+        color="primary"
+        className={classes.buttonmargin}
+        onClick={setfilter}
+      >
         Apply
       </Button>
     </div>

@@ -47,6 +47,10 @@ const Workspace = () => {
   const [selectedChatid, setSelectedChatid] = useState(null);
   const [selectedChatdata, setSelectedChatdata] = useState({} as IChat);
   const [lastresponse, setLastresponse] = useState(null);
+  const [filter, setFilter] = useState({
+    category: '',
+    criteria: '',
+  });
 
   const mockMessage = (userId, message): IChatMessage => {
     let content;
@@ -113,6 +117,13 @@ const Workspace = () => {
     }
   };
 
+  const setfilter = (category, criteria) => {
+    setFilter({
+      category: category,
+      criteria: criteria,
+    });
+  };
+
   return (
     <div className={classes.root}>
       <div className={classes.chat}>
@@ -123,6 +134,8 @@ const Workspace = () => {
           sendmessage={handleAddNewMessage}
           newchat={newchat}
           handleChatClicked={handleChatClicked}
+          setfilter={setfilter}
+          filter={filter}
         />
       </div>
       <div className={classes.controls}>

@@ -39,6 +39,12 @@ const Header = (props) => {
     setfiltermessagemodal(false);
   };
 
+  const setfilter = (userId, topic, message) => {
+    props.setfilter(userId, topic, message);
+    setnewmessagemodal(false);
+    setfiltermessagemodal(false);
+  };
+
   return (
     <>
       <div className={classes.header}>
@@ -70,7 +76,7 @@ const Header = (props) => {
             >
               <FontAwesomeIcon icon={faFilter} />
             </span>
-            {filtermessagemodal ? <FilterchatModal></FilterchatModal> : null}
+            {filtermessagemodal ? <FilterchatModal {...props} setfilter={setfilter}></FilterchatModal> : null}
           </div>
         </ClickAwayListener>
 
