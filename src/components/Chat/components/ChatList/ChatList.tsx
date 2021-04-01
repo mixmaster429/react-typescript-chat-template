@@ -20,6 +20,11 @@ const useStyles = makeStyles((theme: Theme) => ({
   margin: {
     margin: 0,
   },
+  incoming: {
+    fontSize: 26,
+    textAlign: 'center',
+    margin: 0,
+  },
 }));
 
 const ChatList = (props) => {
@@ -27,6 +32,7 @@ const ChatList = (props) => {
   console.log(props.selectedChatdata);
 
   const [selectedChatId, setSelectedChatId] = useState(props.selectedChatdata.chatId);
+  const [hasincoming, setHasincoming] = useState(false);
 
   const handleChatClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>, chatId: string) => {
     setSelectedChatId(chatId);
@@ -47,29 +53,74 @@ const ChatList = (props) => {
     setSelectedChatId(props.selectedChatdata.chatId);
   }, [props.selectedChatdata]);
 
+  useEffect(() => {
+    setHasincoming(false);
+    if (props.chatData)
+      props.chatData.map((item, key) => {
+        if (!item.lastMessage) {
+          setHasincoming(true);
+          console.log('s');
+        }
+      });
+  }, [props.chatData]);
+
   return (
     <div className={classes.root}>
       <Header {...props}></Header>
       <List component="nav">
         {props.chatData &&
           props.chatData.map((chat: IChat, key) => (
-            <ListItem
-              key={key}
-              button
-              selected={selectedChatId === chat.chatId}
-              onClick={($event) => handleChatClick($event, chat.chatId)}
-            >
-              <Avatar>{getinitials(chat.senderId)}</Avatar>
-              <div className={classes.cardTitle}>
-                <p className={classes.margin}>
-                  <Chip size="small" label={chat.channel} color="primary" />
-                  <Chip variant="outlined" color="primary" size="small" label={chat.status} />
-                </p>
-                <p className={classes.margin}>
-                  {chat.lastMessage ? chat.lastMessage.content : ' '}
-                </p>
-              </div>
-            </ListItem>
+            <>
+              {chat.lastMessage && (
+                <ListItem
+                  key={key}
+                  button
+                  selected={selectedChatId === chat.chatId}
+                  onClick={($event) => handleChatClick($event, chat.chatId)}
+                >
+                  <Avatar>{getinitials(chat.senderId)}</Avatar>
+                  <div className={classes.cardTitle}>
+                    <p className={classes.margin}>
+                      <Chip size="small" label={chat.channel} color="primary" />
+                      <Chip variant="outlined" color="primary" size="small" label={chat.status} />
+                    </p>
+                    <p className={classes.margin}>
+                      {chat.lastMessage ? chat.lastMessage.content : ' '}
+                    </p>
+                  </div>
+                </ListItem>
+              )}
+            </>
+          ))}
+      </List>
+
+      {hasincoming && (
+        <List component="nav">
+          <p className={classes.incoming}>Incoming...</p>
+        </List>
+      )}
+
+      <List component="nav">
+        {props.chatData &&
+          props.chatData.map((chat: IChat, key) => (
+            <>
+              {!chat.lastMessage && (
+                <ListItem
+                  key={key}
+                  button
+                  selected={selectedChatId === chat.chatId}
+                  onClick={($event) => handleChatClick($event, chat.chatId)}
+                >
+                  <Avatar>{getinitials(chat.senderId)}</Avatar>
+                  <div className={classes.cardTitle}>
+                    <p className={classes.margin}>
+                      <Chip size="small" label={chat.channel} color="primary" />
+                      <Chip variant="outlined" color="primary" size="small" label={chat.status} />
+                    </p>
+                  </div>
+                </ListItem>
+              )}
+            </>
           ))}
       </List>
       <Footer {...props}></Footer>
