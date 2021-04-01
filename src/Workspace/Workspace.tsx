@@ -83,7 +83,7 @@ const Workspace = () => {
 
   const newchat = (userId, topic, message) => {
     const chatID = uuid();
-    const newmessage = mockMessage(userId, message);
+    // const newmessage = mockMessage(userId, message);
     const newchatdata = {
       chatId: chatID as string,
       senderId: userId as string,
@@ -95,13 +95,14 @@ const Workspace = () => {
       commsType: 'Chat' as CommsType,
       createdAt: DateTime.local(),
     };
-    setChatData([newchatdata, ...chatData ]);
+    setChatData([newchatdata, ...chatData]);
     setSelectedChatid(chatID);
     setSelectedChatdata(newchatdata);
   };
 
   const handleClearAll = (_) => {
     setChatData([] as IChat[]);
+    setSelectedChatdata({} as IChat);
   };
 
   const handleUserIdChange = ($event) => {
