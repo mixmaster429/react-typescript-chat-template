@@ -85,10 +85,6 @@ const ChatMessage = (props) => {
     '#a7ed99',
   ];
 
-  const getindex = (array, id) => {
-    return array.indexOf(id);
-  };
-
   return (
     <>
       <div
@@ -99,7 +95,7 @@ const ChatMessage = (props) => {
         <Avatar
           className={classes.avatar}
           style={{
-            backgroundColor: colorarray[getindex(props.responders, message.authorId)],
+            backgroundColor: colorarray[props.responders.indexOf(message.authorId)],
           }}
         >
           {getinitials(message.authorId)}

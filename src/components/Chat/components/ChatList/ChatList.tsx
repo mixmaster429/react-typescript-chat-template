@@ -84,10 +84,6 @@ const ChatList = (props) => {
         .toUpperCase();
   };
 
-  const getindex = (array, id) => {
-    return array.indexOf(id);
-  };
-
   useEffect(() => {
     setSelectedChatId(props.selectedChatdata.chatId);
   }, [props.selectedChatdata]);
@@ -149,8 +145,7 @@ const ChatList = (props) => {
                               <Avatar
                                 className={classes.responder}
                                 style={{
-                                  backgroundColor:
-                                    colorarray[getindex(chat.currentResponders, user)],
+                                  backgroundColor: colorarray[chat.currentResponders.indexOf(user)],
                                 }}
                               >
                                 {getinitials(user)}
