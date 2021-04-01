@@ -87,10 +87,9 @@ const ChatList = (props) => {
       <List component="nav">
         {props.chatData &&
           props.chatData.map((chat: IChat, key) => (
-            <>
+            <React.Fragment key={key}>
               {chat.lastMessage && checkfilter(chat) ? (
                 <ListItem
-                  key={key}
                   button
                   selected={selectedChatId === chat.chatId}
                   onClick={($event) => handleChatClick($event, chat.chatId)}
@@ -109,7 +108,7 @@ const ChatList = (props) => {
               ) : (
                 <></>
               )}
-            </>
+            </React.Fragment>
           ))}
       </List>
 
@@ -122,26 +121,25 @@ const ChatList = (props) => {
       <List component="nav">
         {props.chatData &&
           props.chatData.map((chat: IChat, key) => (
-            <>
+            <React.Fragment key={key}>
               {!chat.lastMessage && checkfilter(chat) ? (
                 <ListItem
-                  key={key}
                   button
                   selected={selectedChatId === chat.chatId}
                   onClick={($event) => handleChatClick($event, chat.chatId)}
                 >
                   <Avatar>{getinitials(chat.senderId)}</Avatar>
                   <div className={classes.cardTitle}>
-                    <p className={classes.margin}>
+                    <div className={classes.margin}>
                       <Chip size="small" label={chat.channel} color="primary" />
                       <Chip variant="outlined" color="primary" size="small" label={chat.status} />
-                    </p>
+                    </div>
                   </div>
                 </ListItem>
               ) : (
                 <></>
               )}
-            </>
+            </React.Fragment>
           ))}
       </List>
       <Footer {...props}></Footer>

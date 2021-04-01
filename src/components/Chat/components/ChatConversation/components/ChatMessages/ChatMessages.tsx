@@ -1,7 +1,6 @@
 import React from 'react';
 import { Box, makeStyles, Theme, Avatar } from '@material-ui/core';
 import ChatMessage from '../ChatMessage/ChatMessage';
-import { collapseTextChangeRangesAcrossMultipleVersions } from 'typescript';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
