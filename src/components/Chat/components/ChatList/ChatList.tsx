@@ -29,7 +29,6 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 const ChatList = (props) => {
   const classes = useStyles();
-  console.log(props.selectedChatdata);
 
   const [selectedChatId, setSelectedChatId] = useState(props.selectedChatdata.chatId);
   const [hasincoming, setHasincoming] = useState(false);
