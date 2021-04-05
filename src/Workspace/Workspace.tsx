@@ -93,14 +93,14 @@ const Workspace = () => {
 
   const newchat = (userId, topic, message) => {
     const chatID = uuid();
-    // const newmessage = mockMessage(userId, message);
+    const newmessage = mockMessage(userId, message);
     const newchatdata = {
       chatId: chatID as string,
       senderId: userId as string,
       channel: 'SMS' as ChatChannelType,
       currentResponders: [],
       status: 'Open' as ChatStatusType,
-      messages: [],
+      messages: [newmessage],
       topic: topic as ChatTopicType,
       commsType: 'Chat' as CommsType,
       createdAt: DateTime.local(),
