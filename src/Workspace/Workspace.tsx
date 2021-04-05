@@ -98,7 +98,7 @@ const Workspace = () => {
       chatId: chatID as string,
       senderId: userId as string,
       channel: 'SMS' as ChatChannelType,
-      currentResponders: [],
+      currentResponders: [userId],
       status: 'Open' as ChatStatusType,
       messages: [newmessage],
       topic: topic as ChatTopicType,
